@@ -1,0 +1,71 @@
+%=============================================================================
+\subsection{Preparing your Grid certificate}
+\label{sec:certprep}
+%=============================================================================
+Ganga will assume that your grid certificate is in a certain location
+and in a certain format in order to use it. Your grid certificate
+therefore needs to be moved and prepared accordingly - which you can do
+by following the instructions below.
+
+%-----------------------------------------------------------------------------
+\subsubsection{Moving your Grid certificate to your UI}
+\label{moving-your-grid-certificate-to-your-ui}
+%-----------------------------------------------------------------------------
+The first thing to do is move your Grid certificate (the one you got
+after following the instructions in Section~\ref{sec:gridcert})
+%\href{../getting-on-the-grid/grid-certificate.md}{here}
+to the \texttt{\textasciitilde{}/.globus/} directory in your home folder.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{cd} \NormalTok{~}
+\NormalTok{$ }\KeywordTok{pwd}
+\NormalTok{[}\KeywordTok{Your} \NormalTok{home directory.]}
+\NormalTok{$ }\KeywordTok{mkdir} \NormalTok{.globus}
+\NormalTok{$ }\KeywordTok{cp} \NormalTok{[The location of your certificate file.]/[Your certificate filename].p12 ./.globus/.}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{warningbox}{Certificates on CernVMs}
+\emph{If you are using a CernVM and have moved your personal Grid certificate
+file to it, you should change the password of the gridpp account so that
+no-one else can use it. This can be done in the standard UNIX way with
+the passwd command.}
+\end{warningbox}
+
+%-----------------------------------------------------------------------------
+\subsubsection{Converting your Grid certificate}
+\label{converting-your-grid-certificate}
+%-----------------------------------------------------------------------------
+In order to use your Grid certificate, you need to convert them into
+separate certificate and key files. Don't worry, this straightforward
+enough to do with the following commands:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{cd} \NormalTok{~/.globus}
+\NormalTok{$ }\KeywordTok{openssl} \NormalTok{pkcs12 -in [Your certificate filename.].p12 -clcerts -nokeys -out usercert.pem}
+\KeywordTok{Enter} \NormalTok{Import Password:}
+\KeywordTok{MAC} \NormalTok{verified OK}
+\NormalTok{$ }\KeywordTok{openssl} \NormalTok{pkcs12 -in [Your certificate filename.].p12 -nocerts -out userkey.pem}
+\KeywordTok{Enter} \NormalTok{Import Password:}
+\KeywordTok{MAC} \NormalTok{verified OK}
+\KeywordTok{Enter} \NormalTok{PEM pass phrase:}
+\KeywordTok{Verifying} \NormalTok{- Enter PEM pass phrase:}
+\end{Highlighting}
+\end{Shaded}
+
+You will then need to change the file permission settings on the two
+newly-generated files:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{chmod} \NormalTok{400 userkey.pem}
+\NormalTok{$ }\KeywordTok{chmod} \NormalTok{600 usercert.pem}
+\end{Highlighting}
+\end{Shaded}
+
+And that's it! You're now ready to use GridPP DIRAC with Ganga. It may
+have seemed like a lot of work, but hopefully the next section
+%\href{../example-workflow-grid/example-workflow-grid.md}{next section}
+will demonstrate it will all have been worth it.

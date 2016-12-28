@@ -1,0 +1,58 @@
+%=============================================================================
+\subsection{Logging on with GridPP DIRAC}
+\label{sec:logondirac}
+%=============================================================================
+There are many ways of accessing and using Grid resources. Larger
+organisations - such as the four LHC experiments - have developed their
+own frameworks, architectures and mechanisms to enable their members to
+run jobs and access experimental data.
+
+One such framework -- \term{DIRAC}~\cite{DIRAC2010} -- is used by
+LHCb~\cite{LHCb2008}, but also many other Grid
+projects, to manage grid jobs and storage.
+You can read more about DIRAC
+(Distributed Infrastructure with Remote Agent Control)
+on their website\footnote{%
+See \href{http://diracgrid.org}{http://diracgrid.org}}
+or in~\cite{DIRAC2010},
+but for our purposes all you need to
+know for now is that DIRAC provides a way for you to access grid
+resources without worrying too much about what's going on behind the
+scenes.
+
+%-----------------------------------------------------------------------------
+\subsubsection{The GridPP DIRAC instance}
+\label{the-gridpp-dirac-instance}
+%-----------------------------------------------------------------------------
+The Imperial College London GridPP Resource Centre (RC) hosts an
+instance of DIRAC on behalf of GridPP~\cite{GRIDPPDIRAC2015a,GRIDPPDIRAC2015b}.
+The GridPP DIRAC instance is is
+capable of serving multiple VOs, providing grid job and data management
+capabilities for smaller, non-LHC user communities wishing to make use
+of GridPP resources. As a new user, you are automatically registered
+with the GridPP DIRAC instance and the Virtual Organisations you have
+joined. You can then test out various bits of grid functionality to
+determine if grid computing will meet your needs and the needs of your
+users.
+
+You can interact with the Grid via the GridPP DIRAC web portal at:
+
+\url{https://dirac.gridpp.ac.uk}
+
+When you access the portal, you should
+see yourself listed as a \textbf{Visitor} in drop-down menu in the
+bottom-right corner of the browser. Once you have joined one or more
+DIRAC-supported Virtual Organisations, you will be able to select which
+VO you use DIRAC as using this drop-down menu.
+
+\begin{infobox}{The GridPP DIRAC mailing list}
+\emph{You should also join the GridPP DIRAC mailing list to keep informed of
+the latest developments and receive notices of any downtime. You can
+join the mailing list here.}
+\end{infobox}
+
+So you've accessed the GridPP DIRAC web portal. Congratulations!
+However, as discussed, we'll be using GridPP DIRAC via the Ganga
+interface. In order to do that, you'll need to install your Grid
+certificate on your local machine - and the instructions for
+doing this are in the next section.

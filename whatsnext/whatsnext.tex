@@ -1,0 +1,125 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{What's Next?}
+\label{sec:whatsnext}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%=============================================================================
+\subsection{Uploading your software to CVMFS}
+\label{uploading-your-software-to-cvmfs}
+%=============================================================================
+To start with, and if your software package/packages is/are small
+enough, you can probably get away with uploading your software as
+\texttt{LocalFile}s with your Grid job (perhaps using an archive file).
+\emph{In fact, you may prefer this approach as http-based CVMFS repositories
+are world-readable.}
+
+However, at some point you and/or your Virtual Organisation are going to
+want your own CVMFS repository. For small, UK-based VOs the best way to
+do this is on the
+\href{https://www.gridpp.ac.uk/wiki/RAL_Tier1_CVMFS}{RAL Tier-1
+Stratum-0}. \href{mailto:info@gridpp.ac.uk}{Contact us} to find out more
+about doing this - access to the repository is governed by your Grid
+certificate.
+
+In short, the process of uploading your software amounts to:
+
+\begin{itemize}
+\tightlist
+\item \textbf{Generating a proxy with DIRAC}: as this will be used to
+determine who you are and which repository you are accessing;
+\item \textbf{Logging in to the repository}: You can then log in to your CVMFS
+repository with:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{gsissh} \NormalTok{-p 1975 cvmfs-upload01.gridpp.rl.ac.uk}
+\KeywordTok{Last} \NormalTok{login: [Date/time] from [hostname]}
+
+   \KeywordTok{_.} \NormalTok{_.   o}\KeywordTok{|} \KeywordTok{_} \NormalTok{._}
+  \KeywordTok{(_|(_||_|||(_)|} \KeywordTok{|}
+       \KeywordTok{|}
+
+          \KeywordTok{Location}\NormalTok{: r89.harwell.europe hpd r89rack137}
+            \KeywordTok{Branch}\NormalTok{: cc34/cvmfs-uploader (sandbox}\KeywordTok{)}
+         \KeywordTok{Archetype}\NormalTok{: ral-tier1}
+       \KeywordTok{Personality}\NormalTok{: cvmfs-uploader}
+  \KeywordTok{Operating} \NormalTok{System: sl640-x86_64}
+     \KeywordTok{Snapshot} \NormalTok{Date: 2016-10-26}
+
+\NormalTok{[}\DataTypeTok{\{vo-name\}}\KeywordTok{sgm@cvmfsXXXXX} \NormalTok{~]$ cd cvmfs_repo}
+\KeywordTok{bin} \NormalTok{lib code README.md}
+\end{Highlighting}
+\end{Shaded}
+
+\item
+  \textbf{Retrieve your software}: You can now place your software in
+  the repository, arranging it however works best for you. If your code
+  is hosted in an online Git-based repository, simply
+  \texttt{git\ clone} it straight to an appropriate directory.
+\end{itemize}
+
+\begin{infobox}{Looking at other CVMFS repositories}
+\emph{You can take inspiration from other VOs. For example, you can browse the
+ATLAS experiment's (CERN-hosted) CVFMS repository with:}
+code{\$ ls /cvmfs/atlas.cern.ch/} \emph{and so on}.
+\end{infobox}
+
+\begin{warningbox}{Upload times}
+Once put into the repository, it can be several hours before it becomes
+available on the worker nodes - it's not instant. Make sure your
+software is well-tested before putting it up - CVMFS is not appropriate
+for software under development!
+\end{warningbox}
+
+However, once it \emph{is} on there, it's available everywhere. Which is
+nice.
+
+%=============================================================================
+\subsection{Advanced DIRAC functionality}
+\label{advanced-dirac-functionality}
+%=============================================================================
+DIRAC has a great deal of functionality of its own, particularly when
+you start looking at the Python API. However, Ganga provides a nice
+wrapper for much of this so you shouldn't need to touch it. You can find
+out more on the \href{http://diracgrid.org/}{DIRAC homepage}, and check
+out the source code on their \href{https://github.com/DIRACGrid}{GitHub
+page}.
+
+%=============================================================================
+\subsection{Advanced Ganga functionality}
+\label{advanced-ganga-functionality}
+%=============================================================================
+Likewise, there is a lot more to Ganga than we have covered here. Ganga
+has its own documentation page:
+
+\url{http://ganga.readthedocs.io}
+
+which features things like:
+
+\begin{itemize}
+\tightlist
+\item Configuration;
+\item Job manipulation;
+\item Splitters;
+\item Post-processors;
+\item Queues;
+\item Etc.
+\end{itemize}
+
+The \href{https://github.com/ganga-devs/ganga}{GitHub repository} is
+also worth watching for the latest updates and developments, as well as
+raising any bugs or problems you may have in the
+\href{https://github.com/ganga-devs/ganga/issues}{Issues} section.
+
+\subsection{And finally\ldots{}}\label{and-finally}
+
+Moving your workflow to the Grid won't necessarily be straightforward,
+but at GridPP we're here to help -- if you've got a problem, just ask!
+To keep up to date with the
+UserGuide, watch the
+\href{https://github.com/gridpp/user-guides}{\emph{UserGuide} GitHub
+repository} to be notified of
+\href{https://github.com/gridpp/user-guides/issues}{Issues} and Pull
+Requests relating to additions or improvements to the \emph{UserGuide}.
+
+Many thanks for reading so far, and happy Gridding!

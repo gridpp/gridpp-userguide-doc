@@ -1,0 +1,30 @@
+%=============================================================================
+\subsection{Testing}
+\label{moving-the-example-workflow-to-the-grid---testing}
+%=============================================================================
+
+\begin{itemize}
+\item
+  \textbf{Sourcing the DIRAC environment}: You can test the DIRAC
+  environment variables have been set using the \texttt{echo} command.
+  For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{echo} \OtherTok{$DIRAC}
+\KeywordTok{/cvmfs/ganga.cern.ch/dirac_ui/}
+\end{Highlighting}
+\end{Shaded}
+
+  If the DIRAC home directory on CVMFS is not listed, the environment
+  variables have not been set correctly.
+\item
+  \textbf{Generating a DIRAC proxy}: You can test if your proxy
+  generation has been successful by using the \texttt{dirac-proxy-info}
+  command.
+\item
+  \textbf{Successful running of the CERN@school example job}: As with
+  the locally-run example, once you have run and retrieved the images
+  from the example job the first frame image should look something like
+  that seen in Figure~\ref{fig:localrunningframe}.
+\end{itemize}

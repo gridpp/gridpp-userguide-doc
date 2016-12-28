@@ -1,0 +1,82 @@
+%=============================================================================
+\subsection{Your Grid certificate}
+\label{sec:gridcert}
+%=============================================================================
+Your grid certificate is your passport to the grid. It will give you
+access to the vast array of computational resources that GridPP (and the
+wLCG) has to offer. As such, getting a grid certificate is an
+understandably non-trivial, multi-step process. For example, you will
+need to identify yourself to your local Registration Authority (RA) so
+that the grid knows who you are.
+
+In concrete terms, a grid certificate is a .p12 file (i.e.~a pkcs12 web
+browser certificate file) that you will later convert into a \emph{user
+key} file and a \emph{user certificate} file. Encoded according to the
+X.509 standard, these are used by the grid to confirm who are you are
+and so give you access to grid resources.
+
+%-----------------------------------------------------------------------------
+\subsubsection{Requesting a Grid certificate}
+\label{requesting-a-grid-certificate}
+%-----------------------------------------------------------------------------
+Grid certificates in the UK are managed by the
+UK e-Science Certificate Authority\footnote{%
+See \href{http://ngs.ac.uk/ukca}{http://ngs.ac.uk/ukca}}.
+To start the process, you need to choose a web browser that you will have
+consistent access to. We recommend Firefox as this process has been
+tested and confirmed to work with Firefox on most Operating Systems.
+This is because you need to use the same system for both requesting your
+certificate and retrieving it when it is ready.
+
+\begin{warningbox}{Temporary logins}
+\emph{Do not use a temporary login anywhere when requesting a grid
+certificate.}
+\end{warningbox}
+
+Using your browser of choice visit the CA portal\footnote{%
+See \href{https://portal.ca.grid-support.ac.uk/caportal/}{https://portal.ca.grid-support.ac.uk/caportal/}}
+and select the \emph{Request New User Certificate} option. This almost goes
+without saying, but make sure you supply a \textbf{valid email address}
+which you can access. You will also be asked to do things like supply a
+PIN and passwords that you will need later on, so \textbf{make sure you
+write everything down}!
+
+\begin{infobox}{Registration Authroties}
+\emph{You will need to select a Registration Authority (RA) as part of this
+process. If your institution does not have its own RA, select the
+nearest on the drop-down menu. You will need to visit the RA in person
+with some photographic identification, so don't pick one that is too far
+away! If no contact information is listed for a given RA, they will
+almost certainly be retrievable using a Search Engine of Your Choice or
+via their department's webpage. They will be delighted to hear from you!}
+\end{infobox}
+
+Further instructions will then be emailed to you at the email address
+you have supplied during the registration process. Once that has
+happened you should get a further email from someone at the RA asking
+you to visit them in person to complete the validation process.
+
+\begin{warningbox}{Who are you?}
+\emph{You may also be asked to supply a letter of recommendation (or, rather,
+an email from a suitable authority) explaining why you need to use the
+grid and with whom you will be working. If you are unsure about who to
+ask for this, please contact us\footnote{%
+See \href{https://www.gridpp.ac.uk/contact}{https://www.gridpp.ac.uk/contact}}
+and we should be able to help you out.}
+\end{warningbox}
+
+%-----------------------------------------------------------------------------
+\subsubsection{Installing your Grid certificate in your web browser}
+\label{installing-your-grid-certificate-in-your-web-browser}
+%-----------------------------------------------------------------------------
+Assuming all has gone to plan, you should receive a confirmation email
+with a link that will let you download your grid certificate file and
+install it in your browser. You will now be able to export and backup
+your grid certificate using your browser's certificate management
+functionality. This process will vary from browser to browser and from
+OS to OS, so consult the
+\href{http://www.ngs.ac.uk/ukca/certificates}{UK CA documentation} if in
+doubt.
+
+Congratulations - now you can be identified on the grid, you're ready to
+join a \term{Virtual Organisation}.

@@ -1,0 +1,183 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Moving Your Workflow to the Grid}
+\label{sec:gridrunning}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Now that you have your Grid certificate, and it is installed in your
+browser and in your \texttt{\textasciitilde{}/.globus} directory, you're
+ready to try submitting a job to the Grid with DIRAC.
+
+%=============================================================================
+\subsection{Activate DIRAC!}
+\label{activate-dirac}
+%=============================================================================
+Thanks to CVMFS and the \href{https://github.com/ganga-devs/}{Ganga
+team}, activating the GridPP DIRAC functionality is easy:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{source} \NormalTok{/cvmfs/ganga.cern.ch/dirac_ui/bashrc}
+\end{Highlighting}
+\end{Shaded}
+
+You should now be able to tab-complete \texttt{dirac-} to see all of the
+DIRAC commands that are available.
+
+\begin{infobox}{DIRAC on CVMFS}
+\emph{The inclusion of the pre-configured DIRAC UI in the Ganga CVMFS
+repository means that you no longer need to install your own DIRAC UI.
+Which makes life a lot easier}\ldots{}
+\end{infobox}
+
+%-----------------------------------------------------------------------------
+\subsubsection{Generate a Grid proxy}
+\label{generate-a-grid-proxy}
+%-----------------------------------------------------------------------------
+With DIRAC activated via CVMFS, you should now be able generate a
+DIRAC-specific proxy to be used as a member of a DIRAC-enabled VO. Your
+proxy is a file that identifies you on the Grid, letting the system know
+that you're good for using its resources. If, for example, you were a
+member of the \texttt{gridpp} catch-all VO you would use the following
+commands to generate a proxy as a \texttt{gridpp\_user}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{dirac-proxy-init} \NormalTok{-g gridpp_user -M}
+\KeywordTok{Generating} \NormalTok{proxy... }
+\KeywordTok{Enter} \NormalTok{Certificate password:}
+\KeywordTok{Added} \NormalTok{VOMS attribute /gridpp }
+\KeywordTok{Uploading} \NormalTok{proxy for gridpp_user... }
+\KeywordTok{Proxy} \NormalTok{generated: }
+\KeywordTok{subject}      \NormalTok{: /C=UK/O=eScience/OU=QueenMaryLondon/L=Computing/CN=ada lovelace/CN=proxy}
+\KeywordTok{issuer}       \NormalTok{: /C=UK/O=eScience/OU=QueenMaryLondon/L=Computing/CN=ada lovelace}
+\KeywordTok{identity}     \NormalTok{: /C=UK/O=eScience/OU=QueenMaryLondon/L=Computing/CN=ada lovelace}
+\KeywordTok{timeleft}     \NormalTok{: 23:53:59}
+\KeywordTok{DIRAC} \NormalTok{group  : gridpp_user}
+\KeywordTok{path}         \NormalTok{: /tmp/x509up_u501}
+\KeywordTok{username}     \NormalTok{: ada.lovelace}
+\KeywordTok{properties}   \NormalTok{: NormalUser}
+\KeywordTok{VOMS}         \NormalTok{: True}
+\KeywordTok{VOMS} \NormalTok{fqan    : [}\StringTok{'/gridpp'}\NormalTok{] }
+\end{Highlighting}
+\end{Shaded}
+
+If you get output that looks like the above, then it has all worked.
+
+\begin{infobox}{Proxy status}
+\emph{You can check the status of your DIRAC proxy at any time with the
+dirac-proxy-info command.}
+\end{infobox}
+
+%-----------------------------------------------------------------------------
+\subsubsection{Configuring Ganga to use the DIRAC backend}
+\label{configuring-ganga-to-use-the-dirac-backend}
+%-----------------------------------------------------------------------------
+There's just one more step required before you can enjoy Grid running
+with Ganga - you need to add the following to your
+\texttt{\textasciitilde{}/.gangarc} configuration file:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[}\KeywordTok{Configuration}\NormalTok{]}
+\KeywordTok{RUNTIME_PATH} \NormalTok{= GangaDirac}
+
+\NormalTok{[}\KeywordTok{LCG}\NormalTok{]}
+\KeywordTok{GLITE_SETUP} \NormalTok{= /cvmfs/ganga.cern.ch/dirac_ui/bashrc}
+
+\NormalTok{[}\KeywordTok{DIRAC}\NormalTok{]}
+\KeywordTok{DiracEnvSource} \NormalTok{= /cvmfs/ganga.cern.ch/dirac_ui/bashrc}
+
+\NormalTok{[}\KeywordTok{defaults_DiracProxy}\NormalTok{]}
+\KeywordTok{group} \NormalTok{= }\KeywordTok{<}\NormalTok{dirac user group}\KeywordTok{>}
+
+\NormalTok{[}\KeywordTok{defaults_DiracFile}\NormalTok{]}
+\KeywordTok{defaultSE} \NormalTok{= }\KeywordTok{<}\NormalTok{your SE of choice}\KeywordTok{>}
+\end{Highlighting}
+\end{Shaded}
+
+where \texttt{\textless{}dirac\ user\ group\textgreater{}} should be
+replaced by your default VO (e.g. \texttt{gridpp\_user}) and
+\texttt{\textless{}your\ SE\ of\ choice\textgreater{}} should be
+replaced by a suitable Storage Element, e.g.
+\texttt{UKI-LT2-QMUL2-disk}.
+
+\begin{infobox}{Finding an SE}
+\emph{You can find a list of Storage Elements names by using the
+dirac-dms-show-se-status command from the command line.}
+\end{infobox}
+
+You can then re-start Ganga; it will now be ready to connect to the
+DIRAC backend.
+
+%=============================================================================
+\subsection{Run your job on the Grid}
+\label{run-your-job-on-the-grid}
+%=============================================================================
+Now you're ready to run your job on the Grid. First, make a copy of the
+\texttt{local\_job.py} script:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{cd} \OtherTok{$WORKINGDIR}
+\NormalTok{$ }\KeywordTok{cp} \NormalTok{local_job.py dirac_job.py}
+\NormalTok{$ }\KeywordTok{vim} \NormalTok{dirac_job.py}
+\end{Highlighting}
+\end{Shaded}
+
+All you need to do is add the line \texttt{j.backend=Dirac()} before
+submitting. That's it. That's all there is to it.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{cat} \NormalTok{dirac_job.py}
+\KeywordTok{j} \NormalTok{= Job()}
+\KeywordTok{j.name} \NormalTok{= }\StringTok{"CERN@school_dirac_01"}
+\KeywordTok{j.application} \NormalTok{= Executable()}
+\KeywordTok{j.application.exe} \NormalTok{= File(}\StringTok{'run.sh'}\NormalTok{)}
+\KeywordTok{j.application.args} \NormalTok{= [}\StringTok{'B06-W0212/2014-04-02-150255/'}\NormalTok{]}
+\KeywordTok{j.inputfiles} \NormalTok{= [ LocalFile(}\StringTok{'CERNatschool_backgroundrad_dataset.zip'}\NormalTok{) ]}
+\KeywordTok{j.outputfiles} \NormalTok{= [ LocalFile(}\StringTok{'frames.json'}\NormalTok{), }\KeywordTok{LocalFile}\NormalTok{(}\StringTok{'log_process-frames.log'}\NormalTok{), }
+\KeywordTok{LocalFile}\NormalTok{(}\StringTok{'output_images.tar'}\NormalTok{) ]}
+\KeywordTok{j.backend} \NormalTok{= Dirac()}
+\KeywordTok{j.submit}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+(\emph{Oh, you may want to change the job name too}.)
+
+If all has gone to plan, not only will you now be able to monitor your
+job via your local Ganga instance (i.e.~with the \texttt{jobs} command),
+you can see it on the \href{http://dirac.gridpp.ac.uk}{GridPP DIRAC web
+portal}. Select \emph{Jobs} from the top-left menu below the URL bar,
+then \emph{Job Monitor}.
+
+\begin{warningbox}{Submission time}
+\emph{Job submission to the Grid is not an instant process - a bit annoying
+when you're submitting one or two test jobs (which is why local testing
+wit Ganga is great!), but not such an issue with thousands of jobs. You
+may wish to make a cup of tea, or do a bit of washing up.}
+\end{warningbox}
+
+Once the job shows up as green in the web portal, it's completed and you
+can retrieve the output exactly as before.
+
+So there you go - your first \emph{bona fida} grid job. Note that:
+
+\begin{itemize}
+\tightlist
+\item Once your Grid stuff/DIRAC configuration was done, all it took to switch
+to Grid running was a single line of code.
+\item Thanks to CVMFS, you didn't have to do anything extra to deploy
+your software to the Grid;
+\item You didn't need to care about where the job actually ran - Ganga and DIRAC
+sorted that all for you.
+\end{itemize}
+
+There's only one more thing to look at now before we've covered all of
+the Grid-bases - getting data on and off the Grid. We'll look at that in
+the next section.
+
+\newpage
+
+\input{gridrunning/checklist}
+
+\input{gridrunning/testing}

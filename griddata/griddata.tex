@@ -1,0 +1,65 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Putting Data on the Grid}
+\label{sec:griddata}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We've now moved the local example workflow to the Grid.
+However,
+we've still only used data that's been present on our local system, and
+we've manually retrieved the output to our local system. To harness the
+full power of the Grid, we'll need to put data on it. We'll use tools
+provided with DIRAC to do this, namely:
+
+\begin{itemize}
+\tightlist
+\item The DIRAC File Catalog Command Line Interface (DFC CLI);
+\item The DIRAC command line tools;
+\item Some first steps with the DFC's metadata functionality.
+\end{itemize}
+
+First, though, let's look at some basic concepts in grid-based data
+management.
+
+%=============================================================================
+\subsection{Storage Elements, File Catalogs, and Replicas}
+\label{storage-elements-file-catalogs-and-replicas}
+%=============================================================================
+The first thing to wrap one's head around with distributed computing is
+the notion that you don't really need to care about where your data is
+stored. You may well be used to this concept if you've dealt with
+cloud-based storage services such as Dropbox, Google Drive, or even
+Amazon S3 storage. Your files are on one or more servers
+\emph{somewhere}, and all that you need to know are the file names and
+the directories that they're in to access them later.
+
+It's the same with the grid. You upload your files to a grid
+\textbf{Storage Element} (SE) and label them with a \textbf{Logical File
+Name} (LFN) that gets registered in something called a \textbf{File
+Catalog}. If you make copies of a particular file - a \textbf{replica} -
+on one or more additional SEs, the locations of these replicas are
+recorded in the File Catalog too.
+
+\begin{infobox}{Storage Elements and replicas}
+\emph{With most cloud-based storage services, you won't even really care about
+the Storage Elements (or their non-grid equivalents, whatever the they
+happen to be called) and file replicas. However, when considering
+running grid jobs at a particular grid site, the location of your
+replicas can matter (you'll want to make sure your data is available at
+sites that will run jobs for your Virtual Organisation). We'll come back
+to all of these concepts - and provide concrete examples - later.}
+\end{infobox}
+
+The GridPP DIRAC system provides a suite of tools to help you manage all
+of this. If you're familiar with UNIX-based file systems you should find
+it all pretty straightforward. We'll start with the
+DIRAC File Catalog Command Line Interface.
+
+\input{griddata/dfccli}
+
+\input{griddata/cltools}
+
+\input{griddata/metadata}
+
+\input{griddata/checklist}
+
+\input{griddata/testing}
+

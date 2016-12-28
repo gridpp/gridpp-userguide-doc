@@ -1,0 +1,154 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{longtable,booktabs}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+\date{}
+
+\begin{document}
+
+\section{Joining a Virtual
+Organisation}\label{joining-a-virtual-organisation}
+
+Your grid certificate identifies you to the grid as an individual user,
+but it's not enough on its own to allow you to use grid resources; you
+also need to join a Virtual Organisation (VO). These are essentially
+just user groups - typically one per experiment - and individual
+Resource Centres (RCs) can choose to support work by users of a
+particular VO. Most RCs support the four VOs associated with the Large
+Hadron Collider (LHC) experiments. The sign-up procedure varies from VO
+to VO. UK-based VOs typically require a manual approval step, while LHC
+VOs require an active CERN account. If you are already part of an
+experiment that is represented by a VO, they should provide you with any
+specific instructions you need to join.
+
+If you're interesting in using the grid but are not (yet) working as
+part of a user community already represented by a VO, worry not. GridPP
+have created a catch-all VO -
+\href{https://voms.gridpp.ac.uk:8443/voms/gridpp/}{\texttt{gridpp}} -
+and four Regional Virtual Organisations (RVOs) corresponding to the four
+Tier 2s that can be joined to test out what the grid has to offer. Once
+you have used these ``incubator'' VOs to see if the Grid meets your
+needs, you can then think about creating your own Virtual Organisation
+to represent your user community.
+
+Your user community may already have a VO associated with it. Check the
+GridPP wiki page of supported VOs to see if you can join that to speed
+things up.
+
+\subsection{Joining an incubator VO}\label{joining-an-incubator-vo}
+
+Some users have reported that the VOMS registration described below
+fails using the Safari web browser. We have tried and tested the process
+using Mozilla Firefox.
+
+Please ignore any ``untrusted connection'' warnings when accessing the
+VOMS server pages. GridPP is aware that the VOMS server uses unsigned
+certificates, but this situation is unlikely to be resolved any time
+soon.
+
+\subsubsection{Joining the GridPP VO}\label{joining-the-gridpp-vo}
+
+To join the
+\href{https://voms.gridpp.ac.uk:8443/voms/gridpp}{\texttt{gridpp}} VO,
+visit
+\href{https://voms.gridpp.ac.uk:8443/voms/gridpp/register/start.action}{this
+page} using a browser that has your grid certificate installed and
+follow the instructions.
+
+\subsubsection{Joining a Regional VO}\label{joining-a-regional-vo}
+
+Likewise, you can join one of the four regional VOs by clicking on the
+links in the table below and following the instructions.
+
+\begin{longtable}[c]{@{}ll@{}}
+\toprule
+\begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+Regional VO
+\strut\end{minipage} &
+\begin{minipage}[b]{0.05\columnwidth}\raggedright\strut
+Resource Centres
+\strut\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\texttt{vo.londongrid.ac.uk}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+Brunel, UCL, Imperial College, Queen Mary, Royal Holloway
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\texttt{vo.northgrid.ac.uk}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+Lancaster, Liverpool, Manchester, Sheffield, Daresbury Laboratory
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\texttt{vo.scotgrid.ac.uk}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+Glasgow, Edinburgh, Durham
+\strut\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+\texttt{vo.southgrid.ac.uk}
+\strut\end{minipage} &
+\begin{minipage}[t]{0.05\columnwidth}\raggedright\strut
+Birmingham, Bristol, Cambridge, Oxford, Warwick, Rutherford Appleton
+Laboratory, EFDA-JET, Sussex
+\strut\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+Your VO membership request needs to be confirmed manually by one of the
+VO administrators, so please wait for the membership confirmation email
+to arrive before proceeding. You may wish to keep an eye on your junk
+folder(s) too.
+
+Once you have joined a VO, congratulations - you are ready to start
+\href{dirac-first-steps.html}{using the grid}!
+
+\end{document}

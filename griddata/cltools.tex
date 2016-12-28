@@ -1,0 +1,199 @@
+%=============================================================================
+\subsection{The DIRAC Command Line Tools}
+\label{the-dirac-command-line-tools}
+%=============================================================================
+So you've mastered the DFC Command Line Interface. Great stuff. What
+you'll have probably noticed is that, while it's great for small-scale
+operations, it's not ideal for doing things with lots of files on any
+sort of scale. We will therefore want to take a look at the
+\textbf{DIRAC command line tools} for data management.
+
+\begin{infobox}{The command line tools}
+\emph{All of the DIRAC command line tools start with}
+\code{dirac-}. \emph{The data management tools start with}
+\code{dirac-dms-}, \emph{as in Data Management System.
+Press the tab key after typing} \texttt{dirac-dms-}
+\emph{to see all of the available commands.}
+\end{infobox}
+
+Why are these commands useful? Well, it means you can use
+\emph{scripting} to automate large-scale tasks involving many files.
+There are many ways to \emph{script} the DIRAC (or indeed any command
+line) commands. You've probably got your own preferred method that
+reflects your coding background. For the purposes of the UserGuide,
+we'll use simple bits of \textbf{Python} code (along with Python-based
+file management libraries) to generate some simple \texttt{bash} scripts
+that can then be run to perform the DIRAC operations we want to perform.
+
+\begin{infobox}{Scripting DIRAC commands}
+\emph{Of course, bash experts will be able to write scripts that perform all
+of the operations below purely in bash. This is left as an exercise for
+the reader - answers on a punch card please! (Also, we'll be using
+Python for the DIRAC Python API, so it's not a bad thing to use Python
+at this stage!)}
+\end{infobox}
+
+%-----------------------------------------------------------------------------
+\subsubsection{Uploading files}
+\label{uploading-files-tools}
+%-----------------------------------------------------------------------------
+The DIRAC file upload command takes the following form:
+
+\begin{verbatim}
+$ dirac-dms-add-file <LFN> <FILE> <SE>
+\end{verbatim}
+
+where:
+
+\begin{itemize}
+\tightlist
+\item \texttt{\textless{}LFN\textgreater{}} is the Logical File Name
+(LFN) of the entry for the file in the DIRAC File Catalog (DFC);
+\item \texttt{\textless{}FILE\textgreater{}} is the path to the file on your
+local machine, and;
+\item \texttt{\textless{}SE\textgreater{}} is the name
+of the destination Storage Element (SE).
+\end{itemize}
+
+\begin{infobox}{Finding SE names}
+\emph{Remember, you can find the names of the available SEs with the
+dirac-dms-show-se-status command.}
+\end{infobox}
+
+Suppose we have a number of files on our local machine in
+\texttt{/home/gridpp/mydata/} that we want to upload to the grid. The
+following Python code will generate a \texttt{bash} script that will
+upload them to one of the Queen Mary Storage Elements:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ cat make_upload_script.py}
+\CommentTok{#!/usr/bin/env python}
+\CommentTok{# -*- coding: utf-8 -*-}
+
+\ImportTok{import} \NormalTok{os, glob}
+
+\NormalTok{data_path }\OperatorTok{=} \StringTok{'/home/gridpp/mydata'}
+
+\NormalTok{lfn_dir }\OperatorTok{=} \StringTok{'/gridpp/user/a/ada.lovelace/mydata/'}
+
+\NormalTok{se }\OperatorTok{=} \StringTok{'UKI-LT2-QMUL2-disk'}
+
+\NormalTok{s }\OperatorTok{=} \StringTok{"#!/bin/bash}\CharTok{\textbackslash{}n}\StringTok{"}
+
+\ControlFlowTok{for} \NormalTok{my_file }\OperatorTok{in} \BuiltInTok{sorted}\NormalTok{(glob.glob(data_path }\OperatorTok{+} \StringTok{"/*"}\NormalTok{)):}
+    \NormalTok{base_name  }\OperatorTok{=} \NormalTok{os.path.basename(my_file)}
+    \NormalTok{upload_lfn }\OperatorTok{=} \NormalTok{os.path.join(lfn_dir, base_name)}
+    \NormalTok{s }\OperatorTok{+=} \StringTok{"dirac-dms-add-file }\SpecialCharTok{%s}\StringTok{ }\SpecialCharTok{%s}\StringTok{ }\SpecialCharTok{%s}\CharTok{\textbackslash{}n}\StringTok{"} \OperatorTok{%} \NormalTok{(upload_lfn, my_file, se)}
+
+\ControlFlowTok{with} \BuiltInTok{open}\NormalTok{(}\StringTok{"upload_script.sh"}\NormalTok{, }\StringTok{"w"}\NormalTok{) }\ImportTok{as} \NormalTok{sf:}
+    \NormalTok{sf.write(s)}
+\end{Highlighting}
+\end{Shaded}
+
+After you've generated a proxy and sourced the DIRAC environment, you
+can run the generated script as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{python} \NormalTok{make_upload_script.py}
+\NormalTok{$ }\KeywordTok{chmod} \NormalTok{a+x upload_script.sh}
+\NormalTok{$ }\KeywordTok{.} \KeywordTok{upload_script.sh}
+\end{Highlighting}
+\end{Shaded}
+
+The results of this will, of course, depend on the contents of
+\texttt{/home/gridpp/mydata/}, but all being well you should see the
+message:
+
+\begin{verbatim}
+Successfully uploaded file to UKI-LT2-QMUL2-disk
+\end{verbatim}
+
+(or whichever SE you specified in your Python code) after each file has
+been uploaded.
+
+\begin{infobox}{Using Screen}
+\emph{If you're uploading a lot of files, you may wish to consider using
+something like the screen tool so that you can log off your terminal
+session and come back to it later.}
+\end{infobox}
+
+And there we go! Multiple file uploads, all registered in the DIRAC File
+Catalog, using a DIRAC command line tool and a bit of (admitedly
+slightly clumsy) coding.
+
+%-----------------------------------------------------------------------------
+\subsubsection{Replicating files}
+\label{replicating-files-tools}
+%-----------------------------------------------------------------------------
+Now, as we did with the DFC CLI, we can also make replicas of files,
+list information about the replicas of a given file, and remove replicas
+with the following command line tools:
+
+\begin{verbatim}
+dirac-dms-replicate-lfn <LFN> <SE>
+dirac-dms-lfn-replicas <LFN>
+dirac-dms-remove-replicas <LFN> <SE>
+\end{verbatim}
+
+Likewise, we can take the same approach with\ldots{}
+
+%-----------------------------------------------------------------------------
+\subsubsection{Downloading and removing files}
+\label{downloading-and-removing-files-tools}
+%-----------------------------------------------------------------------------
+
+\begin{verbatim}
+dirac-dms-get-file <LFN>
+dirac-dms-remove-files <LFN>
+\end{verbatim}
+
+i.e.~the DIRAC command line tools exist for these operations. However,
+getting information from the DFC about which files you would like to
+replicate, download, remove, etc. is non-trivial when taking the command
+line approach. This is especially true if you're writing scripts.
+
+One approach is to use the \textbf{metadata} functionality the DIRAC
+File Catalog provides to find files of interest.
+
+\begin{infobox}{Metadata}
+\term{Metadata} \emph{is data about the data. By assigning metadata to the files we
+upload to the DIRAC File Catalog, we can perform queries that will
+select only the files we are interested in. It also helps us to manage
+our data. We'll find out more about the DFC's metadata functionality
+later.}
+\end{infobox}
+
+The \texttt{dirac-dms-find-lfns} command finds LFNs based on the DFC
+path and metadata query supplied as options. For example, to find all
+files in the DFC that have been assigned to the experiment
+\texttt{UserGuide}, we can type:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dirac-dms-find-lfns} \NormalTok{Path=/ }\StringTok{"experiment=UserGuide"}
+\NormalTok{\{}\StringTok{'experiment'}\NormalTok{: }\StringTok{'UserGuide'}\NormalTok{\}}
+\KeywordTok{/gridpp/userguide/WELCOME.md}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{experiment} here is the \textbf{metadata element} or
+\textbf{index}. This is a string assigned to the file's LFN that, in
+this case, has the value \texttt{UserGuide}. We can use the results of
+this to download the files we want.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{dirac-dms-get-file} \NormalTok{/gridpp/userguide/WELCOME.md}
+\NormalTok{\{}\StringTok{'Failed'}\NormalTok{: }\DataTypeTok{\{\}}\NormalTok{,}
+ \StringTok{'Successful'}\NormalTok{: \{}\StringTok{'/gridpp/userguide/WELCOME.md'}\NormalTok{: }\StringTok{'/home/gridpp/tmp/WELCOME.md'}\NormalTok{\}\}}
+\NormalTok{$ }\KeywordTok{cat} \NormalTok{WELCOME.md}
+\CommentTok{#Welcome to GridPP!}
+
+\KeywordTok{It} \NormalTok{looks like your download has worked. Congratulations!}
+\end{Highlighting}
+\end{Shaded}
+
+Let's take a closer look at the DFC's metadata functionality using the
+DFC CLI.

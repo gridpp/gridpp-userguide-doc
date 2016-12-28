@@ -1,0 +1,201 @@
+\documentclass[12pt,a4paper]{iopart}
+
+% Document information
+\newcommand{\DRN}{GridPP-ENG-002-UserGuide}
+\newcommand{\thisversion}{1.0}
+
+% Author information
+\input{common/authors/twhyntie.tex}
+
+% Packages and settings for GridPP document formatting
+\input{common/tools/GridPP-packages.tex}
+
+% CERN@school macros and definitions
+\input{common/tools/defs.tex}
+
+%\input{common/tools/latexlinks.tex}
+
+\renewcommand{\listfigurename}{}
+
+\begin{document}
+
+%
+% Title
+%
+% The GridPP logo
+\input{common/tools/logoheader.tex}
+
+\title{%
+The GridPP UserGuide
+}
+
+% 
+% Author information
+\author{\theauthorinit$^{1}$}
+%
+\address{$^1$\theauthoraddressA}
+\ead{\mailto{\theauthoremail}}
+%\ead{\mailto{info@gridpp.ac.uk}}
+
+%-----------------------------------------------------------------------------
+% Abstract
+\begin{abstract}
+The GridPP Collaboration is a community of particle physicists and computer
+scientists based in the United Kingdom and at CERN.
+This document is an offline version of the GridPP UserGuide,
+written as part of GridPP's New User Engagement Programme,
+that aims to help new users make use of GridPP resources
+through the DIRAC, Ganga and CernVM suite of technologies.
+%
+The online version may be found at:
+\href{http://www.gridpp.ac.uk/userguide}{http://www.gridpp.ac.uk/userguide}
+\end{abstract}
+%-----------------------------------------------------------------------------
+%
+
+{\color{white}Spacer}
+\\[6cm]
+
+
+% Add the license information (CC-BY-4).
+\input{common/tools/licenseCCBY4}
+
+
+\newpage
+
+% Add a table of contents.
+\setcounter{tocdepth}{1}
+\tableofcontents
+\newpage
+
+% To make the sections match up with the web version...
+\setcounter{section}{-1}
+
+\input{intro/intro}
+\clearpage
+
+\input{bwb/bwb}
+\clearpage
+
+\input{helloworlds/helloworlds}
+\clearpage
+
+\input{localrunning/localrunning}
+\clearpage
+
+\input{onthegrid/onthegrid}
+\clearpage
+
+\input{gridrunning/gridrunning}
+\clearpage
+
+\input{griddata/griddata}
+\clearpage
+
+\input{griddatarunning/griddatarunning}
+\clearpage
+
+\input{whatsnext/whatsnext}
+\clearpage
+
+\input{troubleshooting/troubleshooting}
+\clearpage
+
+% Appendices
+
+\begin{appendices}
+\input{gridppcernvm/gridppcernvm}
+\end{appendices}
+
+\clearpage
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\section*{References}
+\bibliographystyle{unsrt.bst}
+\bibliography{GridPP}
+%
+%------------------------------------------------------------------------------
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgements}
+\label{sec:ack}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The author would like to thank GridPP Collaboration members Steve Jones
+(Liverpool) and Steve Lloyd (QMUL), as well as the students from the
+\href{http://researchinschools.org}{Institute for Research in Schools},
+for providing invaluable feedback on the initial drafts of the
+\emph{GridPP UserGuide}.
+Andrew McNab (Uni. Manchester) has provided invaluable technical support
+for the operation and maintenance of the
+\href{http://www.gridpp.ac.uk}{GridPP website} on which the online
+version of this guide is hosted\footnote{%
+See \href{http://www.gridpp.ac.uk/userguide}{http://www.gridpp.ac.uk/userguide}}.
+%
+Much inspiration for the structure and
+philosophy of the \emph{GridPP UserGuide} has been drawn from Michael
+Hartl's \emph{\href{https://ww.railstutorial.org}{Ruby on Rails
+Tutorial}} - an excellent read (even if you're not particularly fussed
+about Ruby on Rails). We are also grateful to
+\href{http://github.com}{GitHub} for our
+\href{http://github.com/gridpp}{Organizational Repository} -- thanks!
+
+This work was supported by the UK Science and Technology Facilities Council
+(STFC) via the GridPP Collaboration~\cite{gridpp2006,gridpp2009}
+and grant ST/N00101X/1 as part of work with the CERN@school research
+programme.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{About the author}
+\label{sec:author}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Tom Whyntie is Public Engagement Fellow at the
+\href{http://ph.qmul.ac.uk}{School of Physics \& Astronomy},
+\href{http://www.qmul.ac.uk}{Queen Mary University of London}. He is
+supported by the UK's \href{http://www.stfc.ac.uk}{Science and
+Technology Facility Council} (STFC) through their
+\href{http://www.stfc.ac.uk/funding/fellowships/public-engagement-fellowships/public-engagement-fellows/}{Public
+Engagement Fellowship} programme and through the
+\href{https://www.gridpp.ac.uk}{GridPP Project}. Having used the
+Worldwide LHC Computing Grid (WLCG) extensively during his time on the
+\href{http://cms.web.cern.ch/}{Compact Muon Solenoid} (CMS) experiment
+at \href{http://cern.ch}{CERN}'s Large Hadron Collider, Tom works as
+part of the GridPP Community to engage as many people as possible with
+the Grid through GridPP's New User Engagement Programme. He is also
+consultant scientist for the
+\href{http://researchinschools.org}{CERN@school programme},
+Scientific Officer for the \href{http://researchinschools.org}{Institute
+for Research in Schools}, and Software Coordinator for the
+\href{http://moedal.web.cern.ch}{MoEDAL Collaboration}.
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Version History}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%______________________________________________________________________________
+\begin{table}[h]
+\caption{\label{tab:version}Version history.}
+\lineup
+\begin{indented}
+\item[]\begin{tabular}{@{}cllc}
+\br
+\centre{1}{$\quad$Version    $\quad$} & 
+\centre{1}{$\quad$Description$\quad$} &
+\centre{1}{$\quad$DOI        $\quad$} &
+\centre{1}{$\quad$Author     $\quad$} \\
+\mr
+1.0 & Initial version. & \href{http://dx.doi.org/10.5281/zenodo.222702}{10.5281/zenodo.222702} & TW \\
+\br
+\end{tabular}
+\end{indented}
+\end{table}
+%______________________________________________________________________________
+
+\end{document}

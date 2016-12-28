@@ -1,0 +1,196 @@
+% Packages and settings for GridPP document formatting.
+
+% Graphics
+\usepackage[xetex]{graphicx}
+\usepackage{subcaption}
+\usepackage{enumerate}
+
+% Tables
+\usepackage{array}
+\usepackage{dcolumn}
+\newcolumntype{.}{D{.}{.}{2}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+% For the width of the "Services" column.
+\newcommand*{\servw}{1.0cm}
+
+% Layout
+\usepackage{layouts}
+\usepackage{lscape}
+\usepackage{parskip}
+
+% Sections
+\usepackage[titletoc]{appendix}
+
+% Colours
+\usepackage{xcolor}
+\definecolor{black}{RGB}{0,0,0}
+\definecolor{grey}{RGB}{0.5,0.5,0.5}
+\definecolor{gridppdarkblue}{RGB}{11,45,131}
+\definecolor{gridpplightblue}{RGB}{133,150,193}
+\definecolor{cernblue}{RGB}{0,85,160}
+
+% Mathematics
+\usepackage{latexsym}
+
+% Fonts
+\usepackage{fontspec,xunicode}
+\defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\setmainfont{Latin Modern Sans}
+
+% Headers and footers
+%
+% Using the fancyhdr package for the, um, fancy headings...
+\usepackage{fancyhdr}
+\setlength{\headheight}{16pt}
+\setlength{\voffset}{-0.3in}
+\pagestyle{fancy}
+%
+% Redefine the IOP article header settings for the first page.
+\makeatletter
+\def\ps@myheadings{%
+%    \let\@oddfoot\@empty\let\@evenfoot\@empty
+    \let\@oddhead\@empty\let\@evenhead\@empty
+    \let\@mkboth\@gobbletwo
+    \let\sectionmark\@gobble
+    \let\subsectionmark\@gobble}
+\makeatother
+\lhead{\sffamily\rightmark}
+\rhead{\sffamily\leftmark}
+\lfoot{\sffamily{\DRN-v\thisversion}}
+\cfoot{}
+\rfoot{\sffamily{\thepage}}
+
+% Exercises/questions
+\usepackage[listings]{tcolorbox}
+\tcbset{before={\par\medskip\pagebreak[0]\noindent},after={\par\medskip}}%
+
+% Warning tcolorbox
+% #1: tcolorbox options
+% #2: Box title
+\newtcolorbox{warningbox}[2][]
+{
+  colframe = red!25,
+  colback  = red!10,
+  coltitle = red!20!black,  
+  title    = #2,
+  #1,
+}
+
+% Hint tcolorbox
+% #1: tcolorbox options
+% #2: Box title
+\newtcolorbox{hintbox}[2][]
+{
+  colframe = green!25,
+  colback  = green!10,
+  coltitle = green!20!black,  
+  title    = #2,
+  #1,
+}
+
+% Info (information) tcolorbox
+% #1: tcolorbox options
+% #2: Box title
+\newtcolorbox{infobox}[2][]
+{
+  colframe = grey!25,
+  colback  = grey!10,
+  coltitle = grey!20!black,  
+  title    = #2,
+  #1,
+}
+
+% Coding
+\usepackage{listings}
+% Listing options
+\definecolor{listbacking}{rgb}{0.98,0.98,0.98}
+\definecolor{commentgrey}{rgb}{0.60,0.60,0.60}
+\definecolor{keywordblue}{rgb}{0.00,0.00,0.50}
+\definecolor{stringgreen}{rgb}{0.00,0.50,0.00}
+\definecolor{deepred}{rgb}{0.60,0.00,0.00}
+\lstset{
+  basicstyle=\footnotesize\ttfamily,
+  gobble=4,
+  float=hbtp,
+  emph={__init__},
+  emphstyle=\color{deepred},
+  showspaces=false,
+  showstringspaces=false,
+  backgroundcolor=\color{listbacking},
+  commentstyle=\color{commentgrey},
+  stringstyle=\color{stringgreen},
+  keywordstyle=\color{keywordblue},
+  numbers=left,
+  numbersep=12pt,
+  %framexleftmargin=20pt,
+  %framexrightmargin=20pt,
+  stepnumber=1,
+  showlines=true
+}
+
+% Pandoc coding.
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},fontsize=\small}
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+
+
+% Acronyms
+\usepackage{acronym}
+
+\usepackage{perpage}
+\MakePerPage{footnote}
+
+% Flow charts and diagrams
+\usepackage{tikz}
+\usetikzlibrary{shapes,shapes.misc,arrows,backgrounds,positioning,fit,calc,shadows}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+
+% Background image.
+\usepackage{eso-pic}
+\newcommand\AtPageLowerRight[1]{\AtPageLowerLeft{%
+   \makebox[\paperwidth][r]{#1}}}
+\usepackage{ifthen}
+
+% Links
+\usepackage[xetex,pdfpagelabels]{hyperref}%
+\hypersetup{%
+pdfauthor={\theauthorfull},%
+colorlinks=true,%
+urlcolor=gridppdarkblue,%
+citecolor=gridppdarkblue,%
+%linkcolor=cernblue%
+linkcolor=black%
+}

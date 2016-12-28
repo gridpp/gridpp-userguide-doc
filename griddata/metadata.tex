@@ -1,0 +1,123 @@
+%=============================================================================
+\subsection{First steps with the DIRAC metadata}
+\label{first-steps-with-the-dirac-metadata-functionality}
+%=============================================================================
+
+%-----------------------------------------------------------------------------
+\subsubsection{Finding files using metadata}
+\label{finding-files-using-metadata}
+%-----------------------------------------------------------------------------
+When you're uploading vast amounts of data, it's nice to be able to find
+it later. \textbf{Metadata} - data \emph{about the data} - can help with
+this. DIRAC allows you to assign metadata such as strings, integers, and
+floating point numbers to files and directories (via their Logical File
+Names in the DIRAC File Catalog). You can then query the DFC to return a
+list of the files you want.
+
+For example, once you have sourced your DIRAC environment, generated a
+proxy, and started the DFC CLI, you can find all files associated with
+the \texttt{UserGuide} experiment like so:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{FC}\NormalTok{:/}\KeywordTok{>} \NormalTok{find / experiment=UserGuide}
+\KeywordTok{Query}\NormalTok{: \{}\StringTok{'experiment'}\NormalTok{: }\StringTok{'UserGuide'}\NormalTok{\}}
+\KeywordTok{/gridpp/userguide/WELCOME.md}
+\KeywordTok{QueryTime} \NormalTok{0.98 sec}
+\end{Highlighting}
+\end{Shaded}
+
+We have assigned the value \texttt{UserGuide} to the file
+\texttt{WELCOME.md} for the \texttt{experiment} element or index. The
+\texttt{find} command in the DFC CLI performs the query for us.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{FC}\NormalTok{:/}\KeywordTok{>} \NormalTok{help find}
+ \KeywordTok{Find} \NormalTok{all files satisfying the given metadata information }
+    
+        \KeywordTok{usage}\NormalTok{: find [-q] [-D] }\KeywordTok{<}\NormalTok{path}\KeywordTok{>} \KeywordTok{<}\NormalTok{meta_name}\KeywordTok{>}\NormalTok{=}\KeywordTok{<}\NormalTok{meta_value}\KeywordTok{>} \NormalTok{[}\KeywordTok{<}\NormalTok{meta_name}\KeywordTok{>}\NormalTok{=}\KeywordTok{<}\NormalTok{meta_value}\KeywordTok{>}\NormalTok{]}
+    
+\KeywordTok{FC}\NormalTok{:/}\KeywordTok{>} \NormalTok{exit}
+\end{Highlighting}
+\end{Shaded}
+
+In our query above, \texttt{\textless{}path\textgreater{}} was
+\texttt{/} (i.e.~search the entire catalog from the base directory),
+\texttt{\textless{}meta\_name\textgreater{}} was \texttt{experiment}
+(i.e.~a metadata string index indicating to which experiment the data
+belongs), and \texttt{\textless{}meta\_value\textgreater{}} was
+\texttt{UserGuide} (OK, so the \texttt{UserGuide} isn't really an
+experiment - at least not in the scientific sense - but you get the
+idea!).
+
+\begin{infobox}{Getting help with the DFC CLI}
+\emph{You can get a list of all of the available commands in the DFC CLI by
+using the help command. To list the instructions for a given command (as
+above), type} \texttt{help {[}command{]}}.
+\end{infobox}
+
+There is only one file belonging to the \texttt{UserGuide} experiment in
+the DFC, and it's a pretty harmless MarkDown file. But you can hopefully
+see how, particularly when we start using multiple metadata indices with
+different \emph{types}, DIRAC's metadata functionality is going to be
+pretty useful.
+
+%-----------------------------------------------------------------------------
+\subsubsection{Assigning metadata to a file}
+\label{assigning-metadata-to-a-file}
+%-----------------------------------------------------------------------------
+We can also use the DFC CLI to \emph{assign} metadata to our files.
+Let's create a file with our favourite text editor and upload it to the
+grid using the DFC CLI:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{vim} \NormalTok{TODO.md}
+\NormalTok{$ }\KeywordTok{cat} \NormalTok{TODO.md}
+\KeywordTok{ToDo}
+\NormalTok{====}
+\KeywordTok{*} \NormalTok{Email Charles re. engine}
+\KeywordTok{*} \NormalTok{Re-do punchcards}
+\KeywordTok{*} \NormalTok{Write to Dad}
+\NormalTok{$ }\KeywordTok{dirac-dms-filecatalog-cli} 
+\KeywordTok{Starting} \NormalTok{FileCatalog client}
+
+\KeywordTok{File} \NormalTok{Catalog Client }\OtherTok{$Revision}\NormalTok{: 1.17 }\OtherTok{$Date}\NormalTok{: }
+            
+\KeywordTok{FC}\NormalTok{:/}\KeywordTok{>} \NormalTok{add /gridpp/user/a/ada.lovelace/TODO.md TODO.md UKI-LT2-QMUL2-disk}
+\KeywordTok{File} \NormalTok{/gridpp/user/a/ada.lovelace/TODO.md successfully uploaded...}
+\end{Highlighting}
+\end{Shaded}
+
+We can now set the \texttt{owner} index for the LFN using the
+\texttt{meta\ set} command:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{FC}\NormalTok{:/}\KeywordTok{>} \NormalTok{meta set /gridpp/user/a/ada.lovelace/TODO.md owner ada.lovelace}
+\KeywordTok{/gridpp/user/a/ada.lovelace/TODO.md} \NormalTok{owner ada.lovelace}
+\end{Highlighting}
+\end{Shaded}
+
+We can now find the file again using the \texttt{find} command:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{FC}\NormalTok{:/}\KeywordTok{>} \NormalTok{find / owner=ada.lovelace}
+\KeywordTok{Query}\NormalTok{: \{}\StringTok{'owner'}\NormalTok{: }\StringTok{'ada.lovelace'}\NormalTok{\}}
+\KeywordTok{/gridpp/user/a/ada.lovelace/TODO.md}
+\KeywordTok{QueryTime} \NormalTok{0.01 sec}
+\end{Highlighting}
+\end{Shaded}
+
+As we've said before, the DFC CLI is useful for small-scale operations
+on your data. Hopefully, though, you can start to appreciate the power
+of \textbf{metadata} when it comes to organising your data and
+performing analyses on it.
+
+The most important thing for the moment, though, is that we can now put
+data on the Grid (i.e.~on a Storage Element). This means we can use it
+in our Grid jobs without needing to upload with our job as an
+\texttt{inputfile}. We'll now complete making our example workflow fully
+Grid-enabled in the next section.

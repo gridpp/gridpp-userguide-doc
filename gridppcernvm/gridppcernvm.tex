@@ -1,0 +1,200 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Creating a GridPP CernVM}
+\label{sec:gridppcernvm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+If you don't have an account on a grid-ready cluster, don't worry - this
+section will show you how to create a \textbf{Virtual Machine} (VM) that
+will, essentially, act as a grid User Interface (UI) within whatever
+operating system you happen to be using at the moment. We will do this
+using the CernVM service~\cite{CernVM2015},
+and create a guest CernVM on your host system.
+There are a number of reasons to do this:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The CernVM can act as a pre-built Grid User Interface (UI) that will
+  give you all the tools you need (e.g.~a command line terminal, text
+  editors, etc.) to get the most out of the Grid;
+\item
+  Your CernVM will also give you instant access to the CernVM-File
+  System (CVMFS). A lot of the software we will use to manage our grid
+  jobs and data is provided using this, with the huge bonus of \emph{not
+  needing any installation by you}.
+\item
+  Most of the Grid tools we will use are compiled to run on Scientific
+  Linux 6; With a CernVM you'll be able to use them out of the box;
+\item
+  The standard Grid Worker Nodes you'll be using to run your software on
+  use SL6 machines. If your code runs on your CernVM, it will run on the
+  Grid;
+\item
+  What's more, if everyone uses the CernVM as their Grid UI, we at
+  GridPP will only have to support one operating system (i.e.~the SL6
+  supplied with the CernVM). If we're singing from the same (virtual)
+  hymn sheet, we'll be able to recreate your problems and help you solve
+  them more easily.
+\end{enumerate}
+
+All you need to provide is the RAM and the hard disk space on your local
+host machine.
+
+\begin{infobox}{SL6 cluster access?}
+\emph{If you already have access to a user account on an SL6 terminal, for
+example on a university computing cluster, you can probably skip this
+section.}
+\end{infobox}
+
+%=============================================================================
+\subsection{An overview of the process}
+\label{an-overview-of-the-process}
+%=============================================================================
+To create and configure a CernVM that will meet our needs, you will need
+to:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Install some virtualisation software on your host machine;
+\item
+  Download the appropriate CernVM Virtual Machine baseline image from
+  the CernVM service;
+\item
+  Create a new guest CernVM using the CernVM image;
+\item
+  Configure the guest CernVM so that it has access to the host hard
+  disk;
+\item
+  Configure the CernVM for Grid use by applying the GridPP
+  \emph{contextualisation}.
+\end{enumerate}
+
+Let's look at each of these stages in a bit more detail.
+
+
+%=============================================================================
+\subsection{The virtualisation software}
+\label{the-virtualisation-software}
+%=============================================================================
+You can find a list of compatible virtualisation software solutions on
+the CernVM image download page
+\href{http://cernvm.cern.ch/portal/downloads}{here}. It doesn't really
+matter which you use but we've had success with
+\href{http://download.virtualbox.org/virtualbox/4.3.12/VirtualBox-4.3.12-93733-Win.exe}{this
+version of VirtualBox} (Windows 7).
+
+\begin{warningbox}{Setting up the virtualisation software}
+\emph{This is the one bit that's a bit tricky for us to support - how you do
+this will depend on your local machine and its setup. Remember, search
+engines and StackOverflow are your friends here.}
+\end{warningbox}
+
+%=============================================================================
+\subsection{Creating your CernVM}
+\label{creating-your-cernvm}
+%=============================================================================
+Depending on the virtualisation solution you picked (and got working)
+above, download the baseline CernVM image file from here.
+
+Then use your virtualisation software to create a new VM from the
+downloaded image. You should be able to find instructions for how to do
+this from your virtualisation software provider. Use as much RAM as you
+can spare (up to about half of your host machine's total RAM) and use a
+virtual hard disk of about 30 GB.
+
+Once you have created your CernVM, but \emph{before you start it}, you
+will need setup the \emph{contextualisation} for your CernVM.
+
+\subsection{Contextualising your
+CernVM}\label{contextualising-your-cernvm}
+
+The CernVM service offers the ability to contextualise a CernVM with
+pre-defined settings, environment variables, etc. that are put in place
+when the CernVM is first booted. This is known as \emph{pairing} the VM.
+You can create your own contextuallisations, but it is also possible for
+individuals to create public contexts (e.g.~for LHC experiments, open
+data initiatives, etc.) that anyone can use.
+
+We have created such a context for GridPP. You can use it to get going
+with the Grid. Importantly, you do not need a CERN account to do this,
+so it is possible for anyone with a grid certificate to use it!
+
+To pair your local CernVM with the GridPP context:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Log in to the CernVM service}: You can do this
+  \href{https://cernvm-online.cern.ch/user/login}{here}. If you don't
+  have a CERN account, you can register
+  \href{https://cernvm-online.cern.ch/user/register}{here}.
+\item
+  \textbf{Visit the CernVM Marketplace}: This can be found
+  \href{https://cernvm-online.cern.ch/market/list}{here}.
+\item
+  \textbf{Select the GridPP CernVM context}: Select \emph{Experimental}
+  from the panel on the right, and then click on the
+  \texttt{gridpp-cernvm} context.
+\item
+  \textbf{Boot up your local CernVM}: Once the boot process has
+  finished, you should be presented with a login prompt. Don't enter
+  anything yet.
+\item
+  \textbf{Pair with the GridPP context}: Returning to the GridPP CernVM
+  Marketplace, click on the \emph{Pair} button on the panel on the
+  right. This will generate a six-figure PIN.
+\item
+  \textbf{Apply the context to your VM}: Returning to your booted-up
+  CernVM, enter the PIN (preceeded by a hash, as instructed at the login
+  prompt). The CernVM webpage will now update indicating the VM has been
+  successfully paired. Your VM will then be restarted and
+  contextualised.
+\item
+  \textbf{Log in to your GridPP CernVM}: Once the context has been
+  applied to your CernVM, you will be presented with a graphical login
+  screen (as opposed to the text login prompt). Use the username
+  \texttt{gridpp} and password \texttt{gridpp} to log in to your CernVM.
+\end{enumerate}
+
+And that's it! You now have a shiny new GridPP CernVM from which you'll
+be able to access the Grid.
+
+%=============================================================================
+\subsection{Two final things}
+\label{two-final-things}
+%=============================================================================
+
+\subsubsection{Configure git}\label{configure-git}
+
+We'll be using \texttt{git} (and GitHub) to access various pieces of
+code and scripts. The CernVM comes with \texttt{git} installed but
+you'll need to configure it with your username and email address. This
+can be done with the following commands:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{git} \NormalTok{config --global user.name }\StringTok{"Ada Lovelace"}
+\NormalTok{$ }\KeywordTok{git} \NormalTok{config --global user.email alovelace@qmul.ac.uk}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Local hard disk access}\label{local-hard-disk-access}
+
+Before we move on, it's important to note that you will need to be able
+to access the hard disk of your host machine from that of your guest
+CernVM. This is so that you can move any files that you need across to
+the CernVM - most importantly, your Grid certificate file.
+
+With VirtualBox, for example, this is achieved using the Shared Folders
+functionality.
+
+Before proceeding, you should make sure that you can access the parts of
+your local hard disk that contain any software or data that you want to
+copy across.
+
+\input{gridppcernvm/checklist}
+
+\input{gridppcernvm/testing}

@@ -1,0 +1,37 @@
+%=============================================================================
+\subsection{Testing}
+\label{first-steps-hello-worlds---testing}
+%=============================================================================
+
+\begin{itemize}
+\item
+  \textbf{Running Ganga from the command line}: if you have successfully
+  run Ganga, you should now have the following in your \texttt{\$HOME}
+  directory:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{cd} \OtherTok{$HOME}
+\NormalTok{$ }\KeywordTok{ls} \NormalTok{~/.gangarc}
+\KeywordTok{/home/alovelace/.gangarc}
+\NormalTok{$ }\KeywordTok{ls} \NormalTok{~/gangadir}
+\KeywordTok{repository}  \NormalTok{shared  thread_trace.html  workspace}
+\end{Highlighting}
+\end{Shaded}
+\item
+  \textbf{Looking at the output from local Ganga jobs}: assuming you
+  haven't removed them (you can always re-run them again if you have),
+  you should be able to find the actual output files from your jobs in
+  your \texttt{gangadir}. So for user \texttt{alovelace}'s job 0, the
+  output can be found in:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{ls} \OtherTok{$HOME}\NormalTok{/gangadir/workspace/alovelace/LocalXML/0/output/}
+\KeywordTok{__jobstatus__} \NormalTok{stdout stderr __syslog__}
+\end{Highlighting}
+\end{Shaded}
+
+  You should see something similar (and you can look at the output in
+  \texttt{stdout} directly if you like!).
+\end{itemize}

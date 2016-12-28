@@ -1,0 +1,32 @@
+%=============================================================================
+\subsection{Testing}
+\label{putting-data-on-the-grid---testing}
+%=============================================================================
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Accessing data on a GridPP Storage Element (SE)}: If
+  everything is setup correctly, the following commands should result in
+  the output below:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{cd} \NormalTok{~}
+\NormalTok{$ }\KeywordTok{mkdir} \NormalTok{tmp}
+\NormalTok{$ }\KeywordTok{cd} \NormalTok{tmp}
+\NormalTok{$ }\KeywordTok{dirac-dms-get-file} \NormalTok{LFN:/gridpp/userguide/WELCOME.md}
+\NormalTok{\{}\StringTok{'Failed'}\NormalTok{: }\DataTypeTok{\{\}}\NormalTok{,}
+ \StringTok{'Successful'}\NormalTok{: \{}\StringTok{'/gridpp/userguide/WELCOME.md'}\NormalTok{: }\StringTok{'/home/alovelace/tmp/WELCOME.md'}\NormalTok{\}\}}
+\NormalTok{$ }\KeywordTok{cat} \NormalTok{WELCOME.md}
+\CommentTok{#Welcome to GridPP!}
+
+\KeywordTok{It} \NormalTok{looks like your download has worked. Congratulations! }
+\end{Highlighting}
+\end{Shaded}
+
+\emph{You should have been able to follow everything else in the
+previous subsections too, of course - but much of the input and output
+will depend on your username, VO, etc. - the real test come when you
+start putting data in your own user area in the next section!}

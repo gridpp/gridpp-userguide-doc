@@ -1,0 +1,312 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{First Steps: Hello World(s)!}
+\label{sec:helloworlds}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+It's something of a tradition to start any new computing activity with
+an exercise that produces the phrase,
+``\href{https://en.wikipedia.org/wiki/\%22Hello,_World!\%22_program}{Hello,
+World!}'' with whatever you're doing. And it's not a tradition we'll be
+breaking with now. Distributed computing, however, is all about doing
+things on a bigger scale - so we'll be saying ``Hello'' to many worlds
+all at the same time. We'll do this using the
+\href{http://ganga.readthedocs.io}{Ganga} toolsuite. By the end of this
+chapter you'll have used Ganga to submit multiple jobs with a single
+command and check their output.
+
+\begin{infobox}{Jobs}
+\emph{A job is the term we use to describe a task, or set of tasks, we run on
+our local machine, our cluster's machines, or the grid's Worker Nodes
+(WNs). We'll come back to these concepts later in the UserGuide.}
+\end{infobox}
+
+We won't be using the grid yet - they will run on your local machine -
+but thanks to Ganga and the other tools used by GridPP making the switch
+to grid running is pretty straightforward.
+
+Ready? Let's say ``Hello!''
+
+\subsection{Starting Ganga}\label{starting-ganga}
+
+\href{http://ganga.readthedocs.io}{Ganga} is a Python-based toolkit used
+for submitting jobs and managing data on the grid. You can read more
+about it on its \href{https://ganga.web.cern.ch/ganga/}{CERN page here}.
+The code is all on \href{https://github.com/ganga-devs/ganga}{GitHub},
+of course. Crucially, Ganga is available via CVMFS so \emph{you don't
+even have to install it}. On your terminal with CVMFS access, Ganga can
+be started by simply typing
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{source} \NormalTok{/cvmfs/ganga.cern.ch/runGanga.sh}
+\end{Highlighting}
+\end{Shaded}
+
+After various welcome messages have been presented, you should see the
+Ganga command prompt:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [1]:}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{infobox}{iPython}
+If you're familiar with iPython, this prompt style should look very
+familiar!
+\end{infobox}
+
+\begin{hintbox}{Numbered prompts}
+\emph{The number you see in the Ganga (iPython) prompt is the number of the
+command that you've executed in the terminal. This is great for
+interactive running, but rubbish for writing user guides. We'll replace
+this is with an} \code{X} \emph{in what follows.}
+\end{hintbox}
+
+\begin{hintbox}{Quitting Ganga}
+\emph{To quit Ganga, press}
+\texttt{Ctrl-d}
+\emph{and then type}
+\texttt{y}
+\emph{or press Enter.}
+\end{hintbox}
+
+You will be using Ganga a lot. You may want to create an alias for the
+Ganga start command in your \textasciitilde{}/.bashrc file.
+
+All good so far? Great. Now you're ready to submit your first
+\textbf{job}.
+
+\subsection{Submitting a Hello, World!
+job}\label{submitting-a-hello-world-job}
+
+Ganga has an iPython-esque command line interface for real-time job
+management. Things like jobs are modelled using Python objects. So
+creating and submitting a job is as simple as this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [X]: j = Job()}
+\KeywordTok{Ganga} \NormalTok{In [X]: j.submit() }
+\end{Highlighting}
+\end{Shaded}
+
+You should see an output that looks like something like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{INFO}     \NormalTok{submitting job X}
+\KeywordTok{INFO}     \NormalTok{job X status changed to }\StringTok{"submitting"}
+\KeywordTok{INFO}     \NormalTok{Preparing Executable application.}
+\KeywordTok{INFO}     \NormalTok{Created shared directory: [temporary directory name]}
+\KeywordTok{INFO}     \NormalTok{Preparing subjobs}
+\KeywordTok{INFO}     \NormalTok{submitting job X to Local backend}
+\KeywordTok{INFO}     \NormalTok{job X status changed to }\StringTok{"submitted"}
+\end{Highlighting}
+\end{Shaded}
+
+What's going on here? Well, the \texttt{Job()} object has a bunch of
+default settings that, on instantiation, create a Hello, World! job that
+submits to the ``Local'' backend - i.e.~the machine you are running on.
+
+\begin{infobox}{Back-ends}
+The back-end is wherever you want your jobs to run - your local machine,
+your local computing cluster, or the grid (via GridPP DIRAC). The beauty
+of Ganga is that you have the same interface for whichever you are using
+- which makes switching between them a case of tweaking some
+configuration files.
+\end{infobox}
+
+In the time it has taken to read the above, you should see the following
+output (press return if not).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{INFO}     \NormalTok{job X status changed to }\StringTok{"running"}
+\KeywordTok{INFO}     \NormalTok{Job X Running PostProcessor hook}
+\KeywordTok{INFO}     \NormalTok{job X status changed to }\StringTok{"completed"}
+\KeywordTok{INFO}     \NormalTok{removing: [temporary directory name]}
+\end{Highlighting}
+\end{Shaded}
+
+Your job has finished. You can check this - and the status of any other
+jobs - using the \texttt{jobs} command, which produces a neat little
+summary table of all of your jobs:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [X]: jobs}
+\KeywordTok{Ganga} \NormalTok{Out [X]: }
+\KeywordTok{Registry} \NormalTok{Slice: jobs (1 object)}
+\end{Highlighting}
+\end{Shaded}
+
+OK, so your job has run and finished, but where is the famous phrase
+that signifies success? Well, Ganga manages your job output for you in a
+series of output directories. More on this later, but you can peek at
+the output with the following command from Ganga:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [X]: j.peek(}\StringTok{'stdout'}\NormalTok{, }\StringTok{'more'}\NormalTok{)}
+\KeywordTok{Hello} \NormalTok{World}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{infobox}{Reading the output}
+\emph{We've used the} \code{more} \emph{program to read the output, but you can specify your
+own if you like\ldots{}}
+\end{infobox}
+
+Ta da! You've submitted, run, completed, and checked the output from,
+your first grid-like job. OK, so it didn't run on the grid this time,
+but thanks to Ganga the process isn't actually that different.
+
+\begin{infobox}{Local running for testing workflows}
+\emph{In fact the ability to run grid-like jobs locally is very useful for
+testing your workflow out before unleashing it on the grid\ldots{}}
+\end{infobox}
+
+Finally, to tidy up:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [X]: j.remove()}
+\KeywordTok{INFO}     \NormalTok{removing job X}
+\end{Highlighting}
+\end{Shaded}
+
+You can check with the \texttt{jobs} command that the job has gone from
+the list.
+
+Congratulations - you've submitted your first job! But we can do better
+than that: with distributed computing, the idea is to break your problem
+into bits and tackle them with multiple jobs: \emph{divide and conquer}.
+Let's see how easy this is to do with Ganga.
+
+\subsection{Submitting the Hello, World(s)!
+jobs}\label{submitting-the-hello-worlds-jobs}
+
+We're going to use a Python script to generate and submit multiple jobs
+to the Local backend with Ganga. First, use your favourite editor to
+create the following script (which we will call
+\texttt{hello\_worlds.py}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{$ }\KeywordTok{cat} \NormalTok{hello_worlds.py}
+\KeywordTok{worlds} \NormalTok{= [}\StringTok{'Mercury'}\NormalTok{, }\StringTok{'Venus'}\NormalTok{, }\StringTok{'Mars'}\NormalTok{, }\StringTok{'Earth'}\NormalTok{, }\StringTok{'Jupiter'}\NormalTok{, }\StringTok{'Saturn'}\NormalTok{, \\}
+\StringTok{'Uranus'}\NormalTok{, }\StringTok{'Neptune'}\NormalTok{, }\StringTok{'Pluto'}\NormalTok{]}
+
+\KeywordTok{for} \KeywordTok{world} \NormalTok{in worlds:}
+    \KeywordTok{j} \NormalTok{= Job()}
+    \KeywordTok{j.name} \NormalTok{= }\StringTok{"hello_%s"} \NormalTok{% (world.lower())}
+    \KeywordTok{j.application.args} \NormalTok{= [}\StringTok{"Hello, %s!"} \NormalTok{% (world)]}
+    \KeywordTok{j.submit}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{hintbox}{Two terminals}
+\emph{You may want to have two terminals running in your working directory --
+one to run Ganga in, and one to write scripts in. This will save having
+to quit Ganga each time you want to edit a script with a command-line
+editor (e.g.~vim).}
+\end{hintbox}
+
+There are a few things to note here:
+
+\begin{itemize}
+\tightlist
+\item
+  We have given each job a \texttt{name} using the script. This will
+  make life easier later on once the jobs have finished.
+\item
+  The \texttt{executable} used is still the default (\texttt{echo}), but
+  now we have supplied varying arguments for the different jobs.
+\end{itemize}
+
+Ganga can then run this script with the \texttt{execfile} command. The
+script uses a \texttt{for} loop to create the jobs and submit them:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [X]: execfile(}\StringTok{'hello_worlds.py'}\NormalTok{)}
+\NormalTok{[}\KeywordTok{...} \NormalTok{updates on the job submission ...]}
+\end{Highlighting}
+\end{Shaded}
+
+All being well, all nine jobs will run and complete. Using \texttt{jobs}
+to find the job ID, you can look at the output as before:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [X]: jobs(7)}\KeywordTok{.peek}\NormalTok{(}\StringTok{'stdout'}\NormalTok{, }\StringTok{'more'}\NormalTok{)}
+\KeywordTok{Hello}\NormalTok{, Neptune!}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Job manipulation tips and
+tricks}\label{job-manipulation-tips-and-tricks}
+
+Of course, now you're able to create and submit potentially huge numbers
+of jobs, you may want to think about how to keep on top of which jobs
+are which, how to remove jobs, etc. This is where Ganga really comes in
+to its own. For example:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Selecting jobs by name}: remember how we gave each job a name?
+  Well, this allows us to select the jobs we want in one go:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [X]: my_jobs = jobs.select(name=}\StringTok{'hello_*'}\NormalTok{)}
+
+\KeywordTok{Ganga} \NormalTok{In [X]: my_jobs}
+\KeywordTok{Ganga} \NormalTok{Out [6]: }
+\KeywordTok{Registry} \NormalTok{Slice: jobs.select(minid=}\StringTok{'None'}\NormalTok{, maxid=}\StringTok{'None'}\NormalTok{, name=}\StringTok{"None"}\NormalTok{) }\KeywordTok{(9} \NormalTok{objects}\KeywordTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+You can now use the \texttt{my\_jobs} object to do things to your jobs,
+such as \texttt{submit}, \texttt{copy}, \texttt{resubmit}, etc.
+
+\begin{hintbox}{Tab complete}
+\emph{Use tab complete to see what's possible with the}
+\code{my\_jobs} \emph{you've selected.}
+\end{hintbox}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Removing multiple jobs}: To tidy up all the jobs in one go,
+  use the slice you've created with the \texttt{select} command:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{Ganga} \NormalTok{In [X]: my_jobs.remove()}
+\KeywordTok{INFO}     \NormalTok{removing job X}
+\NormalTok{[}\KeywordTok{...}\NormalTok{]}
+\KeywordTok{INFO}     \NormalTok{removing job X+8}
+\end{Highlighting}
+\end{Shaded}
+
+You can verify this has been successful with the \texttt{jobs} command.
+
+So there we go - your first multiple job submission with Ganga.
+Obviously we are going to need to incorporate more complicated features
+to adapt your workflow for grid running - using your own executables and
+software libraries, uploading input data, extracting the output, etc. -
+but hopefully you can see how we might go about this using Ganga and,
+ultimately, the Grid.
+
+Now take a look at the following checklist to make sure
+you've got everything from this chapter nailed. Then we'll look at a
+\hyperref[sec:localrunning]{more complicated workflow} in
+Section~\ref{sec:localrunning}.
+
+\input{helloworlds/checklist}
+
+\input{helloworlds/testing}
